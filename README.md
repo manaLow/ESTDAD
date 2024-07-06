@@ -7,4 +7,4 @@ Este projeto de implementação de Tipo Abstrato de Dados (TAD)...
 ### Instalação
  - Primeiro isso
  - Depois isso
- - Aí vc
+ - A Manuzinha é gente boa e cheira um pó.
