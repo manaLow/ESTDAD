@@ -1,4 +1,4 @@
-#include "src/exam.h"
+#include "include/exam.h"
 
 #include <stdio.h>
 #include <stdlib.h>
