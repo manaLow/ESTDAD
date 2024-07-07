@@ -19,8 +19,21 @@ Esta parte do projeto tem por objetivo implementar dois tipos abstratos de dados
 
 └── README.md     -> Este arquivo README
 
-## Instalação e Execução
+## Execução do Projeto
 
+### Pré-requisitos
+Certifique-se de ter os seguintes pacotes instalados:
+
+- GCC (ou outro compilador C)
+- Git
+
+Para instalar o GCC e Git, você pode usar os seguintes comandos no seu terminal (para sistemas baseados em Debian/Ubuntu):
+ ```
+sudo apt update
+sudo apt install gcc git
+ ```
+
+### Instalação
 #### 1. Clone o repositório
 Primeiro, clone o repositório do GitHub para seu ambiente local:
 
@@ -33,7 +46,7 @@ Primeiro, clone o repositório do GitHub para seu ambiente local:
 Depois de clonar o repositório, compile o projeto usando o GCC. Execute o seguinte comando:
 
  ```
- gcc -o main main.c patient.c exam.c
+ gcc -o main main.c src/patient.c src/exam.c
  ```
 
 #### 3. Executar o programa:
