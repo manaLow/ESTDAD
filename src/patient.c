@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "patient.h"
+#include "include/patient.h"
 
 struct patient {
   int id;
