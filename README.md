@@ -6,18 +6,25 @@
 Esta parte do projeto tem por objetivo implementar dois tipos abstratos de dados ("Patient" e "Exam"). Através deles, vamos modelar os pacientes que chegam ao hospital e os exames de raio-x, com funções para manipular esses mesmos TADs, incluindo adicionar, remover e buscar elementos.
 
 ## Estrutura do Projeto
+.
+ESTDAD/ ---> Pasta
 
-├── main.c               -> Arquivo principal do programa
+|_  main.c # Arquivo principal
+ 
+|_  include/ ---> Pasta com os cabeçalhos
 
-├── exam.c        -> Arquivo de implementação do TAD Exames
+|____   tad1.h
+   
+|____   tad2.h
+   
+| _ src/ ---> Pasta com as implementações
+ 
+|____   tad1.c
+   
+|____   tad2.c
+   
+|_ README.md # Este arquivo README
 
-├── exam.h        -> Arquivo de header do TAD Exames
-
-├── patient.c        -> Arquivo de implementação do TAD Pacientes
-
-├── patient.h        -> Arquivo de header do TAD Pacientes
-
-└── README.md     -> Este arquivo README
 
 ## Execução do Projeto
 
@@ -46,7 +53,7 @@ Primeiro, clone o repositório do GitHub para seu ambiente local:
 Depois de clonar o repositório, compile o projeto usando o GCC. Execute o seguinte comando:
 
  ```
- gcc -o main main.c src/patient.c src/exam.c
+ gcc -o main main.c src/patient.c src/exam.c -I include
  ```
 
 #### 3. Executar o programa:
