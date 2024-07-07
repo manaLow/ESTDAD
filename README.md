@@ -53,6 +53,10 @@ Primeiro, clone o repositório do GitHub para seu ambiente local:
 Depois de clonar o repositório, compile o projeto usando o GCC. Execute o seguinte comando:
 
  ```
+ make
+ ```
+ou
+```
  gcc -o main main.c src/patient.c src/exam.c -I include
  ```
 
