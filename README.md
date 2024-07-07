@@ -75,6 +75,8 @@ Para executar o programa compilado, use o seguinte comando:
 
 ![patient](https://github.com/manaLow/ESTDAD/assets/104777338/d172cd82-4427-4735-91de-337a45faf172)
 
+<sup> _Print Screen do arquivo cabeçalho "patient.h"_ <sup/>
+
  - **create_patient:** Cria um novo paciente, alocando memória para a estrutura, preenchendo os campos internos com os dados
 passados como parâmetros e retornando um ponteiro para a estrutura criada.
  - **destroy_patient:** Libera a memória alocada para a estrutura do paciente.
@@ -85,6 +87,8 @@ passados como parâmetros e retornando um ponteiro para a estrutura criada.
 #### Exam
 
 ![Captura de tela 2024-07-07 142113](https://github.com/manaLow/ESTDAD/assets/104777338/ae365ca0-6fbb-4384-a1b1-758f4a469a04)
+
+<sup> _Print Screen do arquivo cabeçalho "exam.h"_ <sup/>
 
  - **create_exam:** Cria um novo exame, alocando memória para a estrutura, preenchendo os campos com os dados passados como
 parâmetros e retornando um ponteiro para a estrutura criada.
