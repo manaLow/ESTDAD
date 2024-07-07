@@ -32,7 +32,7 @@ Primeiro, clone o repositório do GitHub para seu ambiente local:
 Depois de clonar o repositório, compile o projeto usando o GCC. Execute o seguinte comando:
 
  ```
- gcc -o programa main.c tad1.c tad2.c
+ gcc -o programa main.c patient.c exam.c
  ```
 
 #### 3. Executar o programa:
