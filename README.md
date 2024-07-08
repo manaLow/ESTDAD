@@ -13,15 +13,15 @@ ESTDAD/ ---> Pasta
  
 |_  include/ ---> Pasta com os cabeçalhos
 
-|____   tad1.h
+|____   exam.h
    
-|____   tad2.h
+|____   patient.h
    
 | _ src/ ---> Pasta com as implementações
  
-|____   tad1.c
+|____   exam.c
    
-|____   tad2.c
+|____   patient.c
    
 |_ README.md # Este arquivo README
 
