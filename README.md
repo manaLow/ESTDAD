@@ -10,6 +10,8 @@ Esta parte do projeto tem por objetivo implementar dois tipos abstratos de dados
 ESTDAD/ ---> Pasta
 
 |_  main.c # Arquivo principal
+
+|_ Makefile
  
 |_  include/ ---> Pasta com os cabeçalhos
 
