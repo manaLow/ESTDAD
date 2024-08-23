@@ -6,45 +6,98 @@
 #include <time.h>
 #include <string.h>
 
+// 1) ------- Criar função genérica para gravar os pacientes, 
+//-------- exames ou relatórios em seus respectivos arquivos --- FEITO!
+
+// 2) ------- Criar função que retorna uma das doenças da tabela, 
+// ------- de acordo com as chances de cada uma acontecer (em struct) - nome e gravidade
+// ----------- Verificar o arquivo exam.c ---- FEITO!
+
+// 3) ------ Criar função que organiza fila dos exames de acordo com prioridades.
+//-------- Adicionando a partir da verificação do grau da última. ----- FEITO! =)
+
+// 4) ------ Pesquisar sobre função sleep() mencionada no arquivo de descrição do trabalho.
+// --------É necessário printar relatórios sobre o que acontece no hospital
+// --------- Talvez criar um arquivo com um relatório geral do hospital.
+
+// 5) ------ Criar o XRMachineManager. Provavelmente em TAD ----- Fazendo...
+
+void create_empty_files(const char* filename) {
+
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Erro ao criar o arquivo");
+        return;
+    }
+    fclose(file);
+}
+
+
 int main()
 {
-// Definindo uma data de nascimento fictícia para o paciente
-struct tm birthdate = {0}; // Inicializar a estrutura com zeros
-birthdate.tm_year = 90; // Ano 1990
-birthdate.tm_mon = 5; // Junho (0-indexed)
-birthdate.tm_mday = 15; // Dia 15
+    // Criar os 3 arquivos já no início em branco
 
-// Criando um paciente
-Patient *patient = create_patient(1, "João Silva", &birthdate);
+    // iniciar contadores
 
-// Imprimindo informações do paciente criado
-printf("Paciente criado:\n");
-printf("ID: %d\n", get_patient_id(patient));
-printf("Nome: %s\n", get_patient_name(patient));
-printf("Data de Nascimento: %s\n", asctime(get_patient_birthdate(patient)));
+    // Possibilidade de surgir um paciente = 20%
 
-// Definindo uma data e hora fictícias para o exame
-time_t current_time;
-struct tm *exam_time;
+    // Se criar paciente, gravar no arquivo. Colocar paciente na fila
+   
+    // 5 máquinas para fazer os exames com cada uma demorando 10 unidades de tempo
 
-// Tempo do exame éo tempo atual
-current_time = time(NULL); // Obter o tempo atual em segundos desde 01/01/1970
-exam_time = localtime(&current_time); // Converter o tempo para a hora local
+    // Ao terminar, o exame é gerado e gravado no arquivo txt
 
-// Criando um exame associado ao paciente criado
-Exam *exam = create_exam(101, get_patient_id(patient), 1, exam_time);
+    // Gravidade de diagnostico 1 - 6, com suas probabilidades de serem gerados
+    
+    // Fila do laudo de acordo com a gravidade. Maior número, maior prioridade
 
-// Imprimindo informações do exame criado
-printf("\nExame criado:\n");
-printf("ID: %d\n", get_exam_id(exam));
-printf("ID do Paciente: %d\n", get_exam_patient_id(exam));
-printf("ID do Aparelho de Raio-X: %d\n", get_exam_rx_id(exam));
-printf("Data e Hora do Exame: %s\n", asctime(get_exam_time(exam)));
+    // Gerar laudo e gravar no arquivo txt
 
-// Liberando a memória alocada
-destroy_exam(exam);
-destroy_patient(patient);
+    // repetir até tempo chegar a 43200
 
-return 0;
+
+
+
+    // RASCUNHO ----------------------------------------------------------------
+
+
+// FUNÇÃO AUXILIAR
+int evento_ocorre(float probabilidade){
+    int num_random = rand() % 100; //Gerar número aleatório entre 0 e 99;
+
+    if(num_random < probabilidade * 100){ //0.2 = 20
+        return 1; //Evento ocorre;
+    }
+    else{
+        return 0; //Não ocorre;
+    }
+}
+
+
+
+// PRINCIPAL
+
+
+qPatient *qp = create_qPatient(); //Criar fila de Pacientes
+
+
+//Iniciar contagem de tempo
+void simular_tempo(int total_tempo, int intervalo){
+    for (int tempo = 0; tempo < total_tempo; tempo++){
+        //Simulação de alguma tarefa a cada unidade de tempo
+        if (evento_ocorre(0.2)){
+            Patient* p = create_patient(id, *name, timestamp) //Criar paciente
+            arq_patient(*patient, *filename); //Inserir no arquivo
+            enqueue_qPatient(qp, id, *name, timestamp) //Inserir paciente na fila
+
+        }
+
+
+        //Espera pelo intervalo de tempo para simular o avanço do tempo
+        sleep(intervalo);
+    }
+
+    printf("Simulação concluída!\n");
+}
 
 }

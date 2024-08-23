@@ -1,19 +1,22 @@
 // Includes
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
+#include <assert.h>
 #include "../include/patient.h"
+
+
+// ---------------------------- STRUCT ----------------------------
 
 // Estrutura
 struct patient {
   int id;
   char* name;
-  struct tm* birthdate;
+  int timestamp;
 } patient;
 
 // Função para alocar memória e inicializar um paciente
-Patient *create_patient(int id, const char *name, struct tm *birthdate){
+Patient *create_patient(int id, const char *name, int timestamp){
     // Alocação de memória
     Patient* new_patient = (Patient *)malloc(sizeof(Patient));
     // Verifica se alocou corretamente
@@ -25,6 +28,7 @@ Patient *create_patient(int id, const char *name, struct tm *birthdate){
 
     // Inicializa variáveis
     new_patient -> id = id;
+    new_patient -> timestamp = timestamp;
     new_patient -> name = strdup(name);
     // Verificando se alocação e inicialização deu certo
     if (new_patient->name == NULL){
@@ -32,17 +36,6 @@ Patient *create_patient(int id, const char *name, struct tm *birthdate){
         free(new_patient);
         return NULL;
     }
-
-    new_patient -> birthdate = (struct tm*)malloc(sizeof(struct tm));
-    // Verificando se alocação e inicialização deu certo
-    if (new_patient->birthdate == NULL){
-        printf("Erro ao alocar memória para a data de nascimento do paciente.\n");
-        free(new_patient->name);
-        free(new_patient);
-        return NULL;
-    }
-
-    *(new_patient->birthdate) = *birthdate;
 
     return new_patient;
 }
@@ -53,10 +46,6 @@ void destroy_patient(Patient* patient){
 
         if (patient->name != NULL){
             free(patient -> name);
-        }
-
-        if (patient->birthdate != NULL){
-            free(patient -> birthdate);
         }
 
         free(patient);
@@ -84,13 +73,115 @@ const char *get_patient_name(Patient* patient){
     }
 }
 
-// Função para retornar a data de nascimento de um paciente
-struct tm* get_patient_birthdate(Patient *patient){
+// Função para retornar o timestamp de um paciente
+int get_patient_timestamp(Patient *patient){
     if (patient != NULL){
-        return patient->birthdate;
+        return patient->timestamp;
     }
     else{
         printf("Erro! O paciente não existe.\n");
         return NULL;
     }
 }
+
+// ---------------------------- QUEUE AND NODE ----------------------------
+
+
+// Definição da estrutura da fila dos pacientes
+struct qPatient{
+    int count;
+	qnPatient* front;
+	qnPatient* rear;
+};
+
+// Definição da estrutura dos nós da fila dos pacientes
+struct qnPatient{
+	Patient* info;
+	qnPatient* next;
+};
+
+//  Criação de filas vazias para pacientes
+qPatient* create_qPatient(){
+	qPatient *q = (qPatient*)malloc(sizeof(qPatient));
+    // Verifica se alocou corretament
+    if (q == NULL){
+        printf("Erro ao alocar memória para a fila vazia.\n");
+        return NULL;
+    }
+    q->front = q->rear = NULL;
+    return q;
+}
+
+// Função para verificar se a fila de pacientes está vazia
+int fila_vazia (qPatient* q){
+    return q->front == NULL;
+}
+
+// Função para inserir paciente na fila
+void enqueue_qPatient(qPatient* q, int id, const char *name, int timestamp){
+    qnPatient* node = (qnPatient*)malloc(sizeof(qnPatient));
+
+    if (node == NULL){
+        printf("Erro ao alocar memória para o nó.\n");
+        return NULL;
+    }
+
+    node->info = create_patient(id, *name, timestamp);
+    node->next = NULL;
+
+    if (fila_vazia(q)){
+        q->front = node;
+    }
+    else{
+        q->rear->next = node;
+    }
+    q->rear = node;
+    q->count++;
+}
+
+// Função para tirar o paciente da fila
+Patient* dqueue_qPatient(qPatient* q){
+    assert(!fila_vazia(q));
+
+    Patient* p = q->front->info;
+    qnPatient* node = q->front;
+
+    if (q->front != q->rear){
+        q->front = q->front->next;
+    }
+    else{
+        q->front = q->rear = NULL;
+    }
+    q->count--;
+    free(node);
+    return p;
+}
+
+// Função para liberar a memória de uma fila.
+void free_qPatient(qPatient* q){
+    qnPatient* node = q->front;
+    while(node != NULL){
+        qnPatient* t = node->next;
+        free(node);
+        node = t;
+    }
+    free(q);
+}
+
+void arq_patient(Patient* patient, const char* filename) {
+  FILE* file = fopen(filename, "w");
+  if (file == NULL) {
+      perror("Erro ao abrir o arquivo");
+      return;
+  }
+
+  fprintf(file, "ID do Paciente: %d\n", patient->id);
+  fprintf(file, "Nome: %s\n", patient->name);
+  fprintf(file, "Chegada: %d\n", patient->timestamp);
+  
+  fclose(file);
+}
+
+
+
+
