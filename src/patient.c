@@ -6,14 +6,26 @@
 #include "../include/patient.h"
 
 
-// ---------------------------- STRUCT ----------------------------
-
-// Estrutura
+// Estrutura de Paciente
 struct patient {
   int id;
   char* name;
   int timestamp;
 } patient;
+
+// Definição da estrutura da fila dos pacientes
+struct qPatient{
+    int count;
+	qnPatient* front;
+	qnPatient* rear;
+};
+
+// Definição da estrutura dos nós da fila dos pacientes
+struct qnPatient{
+	Patient* info;
+	qnPatient* next;
+};
+
 
 // Função para alocar memória e inicializar um paciente
 Patient *create_patient(int id, const char *name, int timestamp){
@@ -87,18 +99,6 @@ int get_patient_timestamp(Patient *patient){
 // ---------------------------- QUEUE AND NODE ----------------------------
 
 
-// Definição da estrutura da fila dos pacientes
-struct qPatient{
-    int count;
-	qnPatient* front;
-	qnPatient* rear;
-};
-
-// Definição da estrutura dos nós da fila dos pacientes
-struct qnPatient{
-	Patient* info;
-	qnPatient* next;
-};
 
 //  Criação de filas vazias para pacientes
 qPatient* create_qPatient(){

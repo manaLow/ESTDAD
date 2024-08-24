@@ -22,39 +22,12 @@
 
 // 5) ------ Criar o XRMachineManager. Provavelmente em TAD ----- FEITOOO!!
 
-void create_empty_files(const char* filename) {
+//------------------- CHAT ------------------------
+// 
+// 
 
-    FILE *file = fopen(filename, "w");
-    if (file == NULL) {
-        perror("Erro ao criar o arquivo");
-        return;
-    }
-    fclose(file);
-}
+//-------------------------------------------------
 
-char* random_name() {
-    // Arrays de nomes e sobrenomes
-    const char* nomes[] = {"João", "Maria", "Pedro", "Ana", "Lucas", "Carla", "Zé", "Chico", "Bia", "Tina", "Fulano", "Beltrano", "Ciclano", "Zé Ninguém", "Tio Patinhas"};
-    const char* sobrenomes[] = {"Silva", "Santos", "Oliveira", "Souza", "Pereira", "Costa", "Pinto", "Almeida", "Nogueira", "da Silva", "da Esquina", "do Pão", "da Silva Sauro", "do Pé Rachado"};
-
-    // Inicializar o gerador de números aleatórios
-    srand(time(NULL));
-
-    // Selecionar aleatoriamente um nome e um sobrenome
-    const char* nome = nomes[rand() % (sizeof(nomes) / sizeof(nomes[0]))];
-    const char* sobrenome = sobrenomes[rand() % (sizeof(sobrenomes) / sizeof(sobrenomes[0]))];
-    
-    char* nome_completo = malloc(strlen(nome) + strlen(sobrenome) + 2);
-    if (nome_completo == NULL) {
-        fprintf(stderr, "Erro ao alocar memória\n");
-        exit(1);
-    }
-    
-    // Concatena o primeiro nome e o sobrenome
-    sprintf(nome_completo, "%s %s", nome, sobrenome);
-    
-    return nome_completo;
-}
 
 
 int main()
@@ -89,6 +62,8 @@ int main()
         }
 
         // inicializar XRMachineManager
+        
+        
 
         if(!fila_vazia(q_patients)){
             // verificar máquina disponível

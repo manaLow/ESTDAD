@@ -106,6 +106,7 @@ struct qnExam{
 
 // Definição da estrutura da fila dos exames
 struct qExam{
+  // int countever;
   int count;
 	qnExam* front;
 	qnExam* rear;
