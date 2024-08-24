@@ -20,7 +20,7 @@
 // --------É necessário printar relatórios sobre o que acontece no hospital
 // --------- Talvez criar um arquivo com um relatório geral do hospital.
 
-// 5) ------ Criar o XRMachineManager. Provavelmente em TAD ----- Fazendo...
+// 5) ------ Criar o XRMachineManager. Provavelmente em TAD ----- FEITOOO!!
 
 void create_empty_files(const char* filename) {
 
@@ -32,12 +32,72 @@ void create_empty_files(const char* filename) {
     fclose(file);
 }
 
+char* random_name() {
+    // Arrays de nomes e sobrenomes
+    const char* nomes[] = {"João", "Maria", "Pedro", "Ana", "Lucas", "Carla", "Zé", "Chico", "Bia", "Tina", "Fulano", "Beltrano", "Ciclano", "Zé Ninguém", "Tio Patinhas"};
+    const char* sobrenomes[] = {"Silva", "Santos", "Oliveira", "Souza", "Pereira", "Costa", "Pinto", "Almeida", "Nogueira", "da Silva", "da Esquina", "do Pão", "da Silva Sauro", "do Pé Rachado"};
+
+    // Inicializar o gerador de números aleatórios
+    srand(time(NULL));
+
+    // Selecionar aleatoriamente um nome e um sobrenome
+    const char* nome = nomes[rand() % (sizeof(nomes) / sizeof(nomes[0]))];
+    const char* sobrenome = sobrenomes[rand() % (sizeof(sobrenomes) / sizeof(sobrenomes[0]))];
+    
+    char* nome_completo = malloc(strlen(nome) + strlen(sobrenome) + 2);
+    if (nome_completo == NULL) {
+        fprintf(stderr, "Erro ao alocar memória\n");
+        exit(1);
+    }
+    
+    // Concatena o primeiro nome e o sobrenome
+    sprintf(nome_completo, "%s %s", nome, sobrenome);
+    
+    return nome_completo;
+}
+
 
 int main()
 {
     // Criar os 3 arquivos já no início em branco
 
     // iniciar contadores
+    int ptotal = 0;
+    int unt = 0;
+    int id = 1;
+
+    // iniciar filas 
+    qPatient* q_patients = create_qPatient();
+    qExam* q_exams = create_qExam();
+
+    //Criar arquivos
+    create_empty_files("db_patient.txt");
+    create_empty_files("db_exam.txt");
+    create_empty_files("db_report.txt");
+
+    while (unt <= 43200){
+
+        srand(time(NULL)); // Seed pra criar número aleatório toda vez
+        double patient_chance = (double)rand() / RAND_MAX; // numero aletório entre 0 e 1
+
+        if (patient_chance <= 0.2){
+            char* n = random_name();
+            Patient* patient = create_patient(id, n, unt);
+            enqueue_qPatient(q_patients,patient);
+            arq_patient(patient,"db_patient.txt");
+            ptotal++;
+        }
+
+        // inicializar XRMachineManager
+
+        if(!fila_vazia(q_patients)){
+            // verificar máquina disponível
+            // 
+        }
+
+        
+        unt++;
+    }
 
     // Possibilidade de surgir um paciente = 20%
 
@@ -60,7 +120,7 @@ int main()
 
     // RASCUNHO ----------------------------------------------------------------
 
-
+}
 // FUNÇÃO AUXILIAR
 int evento_ocorre(float probabilidade){
     int num_random = rand() % 100; //Gerar número aleatório entre 0 e 99;
@@ -75,10 +135,11 @@ int evento_ocorre(float probabilidade){
 
 
 
+
 // PRINCIPAL
 
-
-qPatient *qp = create_qPatient(); //Criar fila de Pacientes
+/*
+qPatient* qp = create_qPatient(); //Criar fila de Pacientes
 
 
 //Iniciar contagem de tempo
@@ -100,4 +161,4 @@ void simular_tempo(int total_tempo, int intervalo){
     printf("Simulação concluída!\n");
 }
 
-}
+*/

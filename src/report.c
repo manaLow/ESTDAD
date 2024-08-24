@@ -55,14 +55,11 @@ Report* create_report(int id, Exam* exam, int timestamp){
   return r;
 }
 
-// Destrói relatório
-void destroy_report(Report *report){
-
-
-}
-
 // Retorna o ID do relatório
 int get_report_id(Report *report){
+  if (report == NULL){
+    return 0;
+  }
   return report->id;
 }
 
@@ -91,40 +88,78 @@ void arq_report(Report* report, const char* filename) {
   fclose(file);
 }
 
-int waiting_time(Report* report, const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
-        return -1;
-    }
+int waiting_time(Report* report, const char* exam_filename) {
+  FILE* file = fopen(exam_filename, "r");
+  if (file == NULL) {
+      perror("Erro ao abrir o arquivo");
+      return -1;
+  }
 
-    int exam_id, patient_id, rx_id, timestamp;
-    char condition_name[100];
-    int condition_severity;
-    char line[256];
+  int exam_id, patient_id, rx_id, timestamp;
+  char condition_name[100];
+  int condition_severity;
+  char line[256];
 
-    while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "ID do Exame: %d", &exam_id) == 1) {
-            // Ler as próximas linhas para obter os outros campos
-            fgets(line, sizeof(line), file); // ID do Paciente
-            fgets(line, sizeof(line), file); // ID da Máquina RX
-            fgets(line, sizeof(line), file); // Timestamp
-            sscanf(line, "Timestamp: %d", &timestamp);
-            fgets(line, sizeof(line), file); // Condição do Paciente
-            fgets(line, sizeof(line), file); // Gravidade
+  while (fgets(line, sizeof(line), file)) {
+      if (sscanf(line, "ID do Exame: %d", &exam_id) == 1) {
+          // Ler as próximas linhas para obter os outros campos
+          fgets(line, sizeof(line), file); // ID do Paciente
+          fgets(line, sizeof(line), file); // ID da Máquina RX
+          fgets(line, sizeof(line), file); // Timestamp
+          sscanf(line, "Timestamp: %d", &timestamp);
+          fgets(line, sizeof(line), file); // Condição do Paciente
+          fgets(line, sizeof(line), file); // Gravidade
 
-            if (exam_id == report->exam_id) {
-                fclose(file);
-                return report->timestamp - timestamp;
-            }
-        }
-    }
+          if (exam_id == report->exam_id) {
+              fclose(file);
+              return report->timestamp - timestamp;
+          }
+      }
+  }
 
-    fclose(file);
-    printf("Exame não encontrado.\n");
-    return -1;
+  fclose(file);
+  printf("Exame não encontrado.\n");
+  return -1;
 }
 
-float waiting_mean(){
-    
+double mean_waiting_time(const char* report_filename, const char* exam_filename) {
+  FILE* file = fopen(report_filename, "r");
+  if (file == NULL) {
+      perror("Erro ao abrir o arquivo");
+      return -1;
+  }
+
+  int total_waiting_time = 0;
+  int valid_reports = 0;
+  int report_id, exam_id, timestamp;
+  char condition_name[100];
+  char line[256];
+
+  while (fgets(line, sizeof(line), file)) {
+      if (sscanf(line, "ID do Laudo: %d", &report_id) == 1) {
+          // Ler as próximas linhas para obter os outros campos
+          fgets(line, sizeof(line), file); // ID do Exame
+          sscanf(line, "ID do Exame: %d", &exam_id);
+          fgets(line, sizeof(line), file); // Condição
+          fgets(line, sizeof(line), file); // Gerado em
+          sscanf(line, "Gerado em: %d", &timestamp);
+
+          // Criar um relatório temporário para calcular o tempo de espera
+          Condition condition = {"", 0}; // Condição fictícia
+          Report report = {report_id, exam_id, &condition, timestamp};
+
+          int wait_time = waiting_time(&report, exam_filename);
+          if (wait_time != -1) {
+              total_waiting_time += wait_time;
+              valid_reports++;
+          }
+      }
+  }
+  fclose(file);
+
+  if (valid_reports == 0) {
+      return 0.0; // Evitar divisão por zero
+  }
+
+  return (double)total_waiting_time / valid_reports;
 }

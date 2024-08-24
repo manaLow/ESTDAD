@@ -14,7 +14,7 @@ int get_exam_id(Exam *exam);
 int get_exam_patient_id(Exam *exam);
 int get_exam_rx_id(Exam *exam);
 int get_exam_time(Exam *exam);
-Condition* condition_IA();
+Condition* get_random_condition();
 void arq_exam(Exam *exam, const char* filename);
 
 // ---------------------------- QUEUE AND NODE ----------------------------

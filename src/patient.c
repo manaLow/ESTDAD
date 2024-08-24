@@ -118,7 +118,7 @@ int fila_vazia (qPatient* q){
 }
 
 // Função para inserir paciente na fila
-void enqueue_qPatient(qPatient* q, int id, const char *name, int timestamp){
+void enqueue_qPatient(qPatient* q, Patient* patient){
     qnPatient* node = (qnPatient*)malloc(sizeof(qnPatient));
 
     if (node == NULL){
@@ -126,7 +126,7 @@ void enqueue_qPatient(qPatient* q, int id, const char *name, int timestamp){
         return NULL;
     }
 
-    node->info = create_patient(id, *name, timestamp);
+    node->info = patient;
     node->next = NULL;
 
     if (fila_vazia(q)){
