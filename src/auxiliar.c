@@ -1,3 +1,4 @@
+#include "../include/auxiliar.h"
 #include "../include/patient.h"
 #include "../include/exam.h"
 #include "../include/report.h"
@@ -37,12 +38,12 @@ void create_empty_files(const char* filename) {
     fclose(file);
 }
 
+// Gerar nome aleatório
 char* random_name() {
-    // Arrays de nomes e sobrenomes
+    
     const char* nomes[] = {"João", "Maria", "Pedro", "Ana", "Lucas", "Carla", "Zé", "Chico", "Bia", "Tina", "Fulano", "Beltrano", "Ciclano", "Zé Ninguém", "Tio Patinhas"};
     const char* sobrenomes[] = {"Silva", "Santos", "Oliveira", "Souza", "Pereira", "Costa", "Pinto", "Almeida", "Nogueira", "da Silva", "da Esquina", "do Pão", "da Silva Sauro", "do Pé Rachado"};
 
-    // Inicializar o gerador de números aleatórios
     srand(time(NULL));
 
     // Selecionar aleatoriamente um nome e um sobrenome
@@ -63,7 +64,7 @@ char* random_name() {
 
 // -----------------------------------------------------------------------
 
-// Contabilizar quantos laudos já foram entregues (Em breve)
+// Contabilizar quantos laudos ou exames
 int contar_laudos_exames(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -109,4 +110,6 @@ void relatorio_print(int ptotal, const char *report_file, const char *exam_file,
     mean_waiting_time(report_file, exam_file);
     printf("\nTempo médio de laudo por condição: \n\n");
     mean_time_by_condition(report_file, exam_file);
+    printf("\n Número de exames feitos depois de 7.200 u.t:");
+    // falta isso aqui
 }

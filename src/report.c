@@ -14,12 +14,14 @@ typedef struct report
   int timestamp;
 } report;
 
+// Estrutura para categoria de prioridade;
 struct condition_IA
 {
   char *name_condition;
   int severity;
 };
 
+// Estrutura do exame
 struct exam
 {
   int id;
@@ -29,6 +31,7 @@ struct exam
   int timestamp;
 };
 
+// Estrutura para calcular as médias
 typedef struct
 {
   char name_condition[100];
@@ -91,6 +94,7 @@ int get_report_timestamp(Report *report)
   return report->timestamp;
 }
 
+// Grava o report no banco de dados
 void arq_report(Report *report, const char *filename)
 {
   FILE *file = fopen(filename, "w");
@@ -108,6 +112,7 @@ void arq_report(Report *report, const char *filename)
   fclose(file);
 }
 
+// Tempo de espera pelo laudo
 int waiting_time(Report *report, const char *exam_filename)
 {
   FILE *file = fopen(exam_filename, "r");
@@ -195,6 +200,8 @@ double mean_waiting_time(const char *report_filename, const char *exam_filename)
   return (double)total_waiting_time / valid_reports;
 }
 
+
+// Função que calcula e imprime tempo de espera médio por condição
 double mean_time_by_condition(const char *report_filename, const char *exam_filename)
 {
   FILE *file = fopen(report_filename, "r");

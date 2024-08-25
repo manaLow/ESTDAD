@@ -9,12 +9,11 @@ typedef struct qnPatient qnPatient;
 
 // ---------------------------- STRUCT ----------------------------
 
-Patient* create_patient(int id, const char *name, int timestamp);
-void destroy_patient(Patient *patient);
-int get_patient_id(Patient *patient);
-const char* get_patient_name(Patient *patient);
-int get_patient_timestamp(Patient *patient);
-void arq_patient(Patient* patient, const char* filename);
+Patient* create_patient(int id, const char *name, int timestamp); // Criar paciente
+void destroy_patient(Patient *patient); // Deletar paciente
+int get_patient_id(Patient *patient); // Obter ID do paciente
+const char* get_patient_name(Patient *patient); // Obter nome paciente
+int get_patient_timestamp(Patient *patient); // Obter timestamp do paciente
 
 // ---------------------------- QUEUE AND NODE ----------------------------
 

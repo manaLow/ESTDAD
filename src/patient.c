@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "../include/patient.h"
 
+// ----------------- STRUCTS ------------------
 
 // Estrutura de Paciente
 struct patient {
@@ -96,9 +97,8 @@ int get_patient_timestamp(Patient *patient){
     }
 }
 
+
 // ---------------------------- QUEUE AND NODE ----------------------------
-
-
 
 //  Criação de filas vazias para pacientes
 qPatient* create_qPatient(){
@@ -168,6 +168,10 @@ void free_qPatient(qPatient* q){
     free(q);
 }
 
+
+// --------------------- ARQUIVO --------------------
+
+// Gravar paciente no banco de dados
 void arq_patient(Patient* patient, const char* filename) {
   FILE* file = fopen(filename, "w");
   if (file == NULL) {
