@@ -107,9 +107,10 @@ void relatorio_print(int ptotal, const char *report_file, const char *exam_file,
     int qtd_report = contar_laudos_exames(report_file);
     printf("Realizaram exame: %d, %d%% receberam laudo.\n", qtd_exam, (qtd_report/qtd_exam)*100); // EXAMES REALIZADOS / NÚMERO DE LAUDOS;
     printf("Tempo médio de laudo: \n");
-    mean_waiting_time(report_file, exam_file);
-    printf("\nTempo médio de laudo por condição: \n\n");
+    double tmd = mean_waiting_time(report_file, exam_file);
+    printf("%2.lf", tmd);
     mean_time_by_condition(report_file, exam_file);
     printf("\n Número de exames feitos depois de 7.200 u.t:");
+    printf("\n%d",qtd_exam);
     // falta isso aqui
 }

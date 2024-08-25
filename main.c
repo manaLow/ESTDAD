@@ -37,7 +37,7 @@ int main()
     inicia_atendimento(doutor);
     
 
-    while (unt <= 43200){
+    while (unt < 43200){
 
         srand(time(NULL)); // Seed pra criar número aleatório toda vez
         double patient_chance = (double)rand() / RAND_MAX; // numero aletório entre 0 e 1
@@ -56,8 +56,10 @@ int main()
         aloca_atendimento(doutor, q_exams);
         
         unt++;
-    }
 
-    //Função sleep para mostrar relatório
+        if(unt % 7200 == 0){
+            relatorio_print(ptotal, "db_report.txt", "db_exam.txt", q_patients);
+        }
+    }
 
 }
