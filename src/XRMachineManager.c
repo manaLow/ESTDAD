@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 // Estrutura máquina
-typedef struct maquina
+struct maquina
 {
     int rx_id;
     int ocupado;
@@ -22,17 +22,17 @@ struct patient
 } patient;
 
 // Estrutura médico
-typedef struct doctor
+struct doctor
 {
     int ocupado;
     int tempo_restante;
     Exam *exame;
-} Doctor;
+};
 
 // Inicializa máquinas
 void inicializa_aparelhos(Machine *aparelhos)
 {
-    for (int i = 0; i < NUM_APARELHOS; i++)
+    for (int i = 0; i < 5; i++)
     {
         aparelhos[i].rx_id = i;
         aparelhos[i].ocupado = 0;
@@ -44,7 +44,7 @@ void inicializa_aparelhos(Machine *aparelhos)
 // Aloca paciente da fila pra os aparelhos
 void aloca_paciente(Machine *aparelhos, qPatient *fila)
 {
-    for (int i = 0; i < NUM_APARELHOS; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (!aparelhos[i].ocupado && !fila_vazia(fila))
         {
@@ -60,7 +60,7 @@ void aloca_paciente(Machine *aparelhos, qPatient *fila)
 // Atualiza tempo e ocupação
 void atualiza_aparelhos(Machine *aparelhos, qExam *qexam, int unt)
 {
-    for (int i = 0; i < NUM_APARELHOS; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (aparelhos[i].ocupado)
         {

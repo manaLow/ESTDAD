@@ -1,12 +1,12 @@
 #ifndef XR_MACHINE_MANAGER_H
 #define XR_MACHINE_MANAGER_H
-#define NUM_APARELHOS 5
 #include "patient.h"
 #include "exam.h"
 
 
 typedef struct maquina Machine;
 typedef struct doctor Doctor;
+typedef struct patient Patient;
 
 void inicializa_aparelhos(Machine* aparelhos); //Inicializar os aparelhos;
 void aloca_paciente(Machine* aparelhos, qPatient* fila); //Aloca os pacientes para as máquinas;

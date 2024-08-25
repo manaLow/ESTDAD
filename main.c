@@ -32,11 +32,11 @@ int main()
     create_empty_files("db_report.txt");
 
     // Inicializa máquinas e médico
-    Machine *aparelhos;
-    Doctor *doutor;
-    inicializa_aparelhos(aparelhos);
-    inicia_atendimento(doutor);
-    
+    Machine* aparelhos[5];  // Declaração do array de máquinas
+    inicializa_aparelhos(aparelhos);   // Chamada da função para inicializar as máquinas
+
+    Doctor* doutor;  // Declaração da variável do tipo Doctor
+    inicia_atendimento(doutor);  // Chamada da função para iniciar o atendimento
 
     while (unt < 43200){
 
