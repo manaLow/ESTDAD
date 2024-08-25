@@ -2,7 +2,7 @@
 #define AUXILIAR_H
 
 typedef struct patient Patient;
-typedef struct qPatient qPactient;
+typedef struct qPatient qPatient;
 typedef struct qnPatient qnPatient;
 
 void create_empty_files(const char* filename);

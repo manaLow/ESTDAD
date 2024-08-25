@@ -8,16 +8,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <locale.h>
+#include <unistd.h>  
 
 
 int main()
 {
-    // Criar os 3 arquivos já no início em branco
 
     // iniciar contadores
-    int ptotal = 0;
-    int unt = 0;
-    int id_p = 1;
+    int ptotal = 0; // Número total de pacientes 
+    int unt = 0; // Unidade de Tempo
+    int id_p = 1; 
     int id_l = 0;
 
 
@@ -58,6 +59,7 @@ int main()
         unt++;
 
         if(unt % 7200 == 0){
+            sleep(4);
             relatorio_print(ptotal, "db_report.txt", "db_exam.txt", q_patients);
         }
     }
