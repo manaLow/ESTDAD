@@ -1,9 +1,8 @@
+# Simulação de Exames de Raio-X e Diagnóstico (PARTE 2)
 
-# Simulação de Realização de Exames de Raio-X (PARTE 1)
-
-> _Grupo J: Kevin Kliss e Manuely Lemos_
+> _Grupo M: Kevin Kliss e Manuely Lemos_
 ## Descrição
-Esta parte do projeto tem por objetivo implementar dois tipos abstratos de dados ("Patient" e "Exam"). Através deles, vamos modelar os pacientes que chegam ao hospital e os exames de raio-x, com funções para manipular esses mesmos TADs, incluindo adicionar, remover e buscar elementos.
+A segunda parte do projeto tem por objetivo simular uma situação em que pacientes chegam ao hospital e, de acordo com a urgência dos seus pré diagnósticos, são organizados em uma fila virtual de atendimento. Além dos tipos abstratos de dados, ainda utilizados na primeira parte do projeto, serão implementadas filas e arquivos que armazenarão dados ao longo de todo percurso do paciente até a entrega do laudo final.
 
 ## Estrutura do Projeto
 .
@@ -12,21 +11,32 @@ ESTDAD/ ---> Pasta
 |_  main.c # Arquivo principal
 
 |_ Makefile
- 
+
 |_  include/ ---> Pasta com os cabeçalhos
 
 |____   exam.h
-   
-|____   patient.h
-   
-| _ src/ ---> Pasta com as implementações
- 
-|____   exam.c
-   
-|____   patient.c
-   
-|_ README.md # Este arquivo README
 
+|____   patient.h
+
+|____   report.h
+
+|____   XRMachineManager.h
+
+|____   auxiliar.h
+
+| _ src/ ---> Pasta com as implementações
+
+|____   exam.c
+
+|____   patient.c
+
+|____   report.c
+
+|____   XRMachineManager.c
+
+|____   auxiliar.c
+
+|_ README.md # Este arquivo README
 
 ## Execução do Projeto
 
@@ -68,46 +78,28 @@ Para executar o programa compilado, use o seguinte comando:
  ```
  ./main
  ```
- 
-## Funcionalidades
+
+ ## Funcionalidades
 
 ### Exemplo do uso de TADs
 
 #### Patient
 
-![patient](https://github.com/manaLow/ESTDAD/assets/104777338/d172cd82-4427-4735-91de-337a45faf172)
+![patient](link do printscreen)
 
 <sup> _Print Screen do arquivo cabeçalho "patient.h"_ <sup/>
 
  - **create_patient:** Cria um novo paciente, alocando memória para a estrutura, preenchendo os campos internos com os dados
-passados como parâmetros e retornando um ponteiro para a estrutura criada.
+ passados como parâmetros e retornando um ponteiro para a estrutura criada.
  - **destroy_patient:** Libera a memória alocada para a estrutura do paciente.
  - **get_patient_id:** Retorna a identificação única do paciente.
  - **get_patient_name:** Retorna nome do paciente.
- - **get_patient_birthdate:** Retorna data de nascimento do paciente.
+ - **get_patient_timestamp:** Retorna o timestamp do paciente.
+ - **create_qPatient:** Criação de fila vazia para pacientes.
+ - **fila_vazia:** Verificar se a fila está vazia.
+ - **enqueue_qPatient:** Inserir paciente na fila.
+ - **dqueue_qPatient:** Retirar paciente da fila.
+ - **free_qPatient:** Função para liberar memória de uma fila.
+ - **arq_patient:** Gravar paciente no banco de dados.
 
-#### Exam
-
-![Captura de tela 2024-07-07 142113](https://github.com/manaLow/ESTDAD/assets/104777338/ae365ca0-6fbb-4384-a1b1-758f4a469a04)
-
-<sup> _Print Screen do arquivo cabeçalho "exam.h"_ <sup/>
-
- - **create_exam:** Cria um novo exame, alocando memória para a estrutura, preenchendo os campos com os dados passados como
-parâmetros e retornando um ponteiro para a estrutura criada.
- - **destroy_exam:** Libera a memória alocada para a estrutura de exame.
- - **get_exam_id:** Retorna a identificação única do exame.
- - **get_exam_patient_id:** Retorna a identificação única do paciente associado ao exame.
- - **get_exam_rx_id:** Retorna a identificação única do aparelho de raio-X utilizado no exame.
- - **get_exam_time:** Retorna horário de realização do exame.
- 
-
-
-
-
-
-
-
-
-
-
-
+ ## Exemplo de Uso do Projeto

@@ -1,14 +1,15 @@
 // Includes
 #include "../include/exam.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 // ---------------------------- STRUCT ----------------------------
 
 // Estrutura de Exam
-struct exam
-{
+struct exam {
   int id;
   int patient_id;
   int rx_id;
@@ -17,19 +18,18 @@ struct exam
 };
 
 // Definição de estrutura do Condition_IA
-struct condition_IA
-{
+struct condition_IA {
   char *name_condition;
   int severity;
 };
 
 // Criar exame
-Exam *create_exam(int id, int patient_id, int rx_id, Condition (*get_random_condition)(), int timestamp)
-{
+
+//Alterei a função
+Exam *create_exam(int id, int patient_id, int rx_id, Condition* condition, int timestamp) {
   Exam *new_exam = (Exam *)malloc(sizeof(Exam)); // Alocação de mamória pra estrutura
   // Verifica se foi alocado
-  if (new_exam == NULL)
-  {
+  if (new_exam == NULL) {
     printf("Erro ao alocar memória para o novo exame.");
     return NULL;
   }
@@ -39,98 +39,66 @@ Exam *create_exam(int id, int patient_id, int rx_id, Condition (*get_random_cond
   new_exam->patient_id = patient_id;
   new_exam->rx_id = rx_id;
   new_exam->condition_IA = (Condition *)malloc(sizeof(Condition));
-  if (new_exam->condition_IA == NULL)
-  {
+  if (new_exam->condition_IA == NULL) {
     printf("Erro ao alocar memória para a condição.\n");
     free(new_exam);
     return NULL;
   }
-  *(new_exam->condition_IA) = get_random_condition();
+  new_exam->condition_IA->name_condition = condition->name_condition;
+  new_exam->condition_IA->severity = condition->severity;
   new_exam->timestamp = timestamp;
 
   return new_exam;
 }
-// Função para liberar memória de um exame
-void destroy_exam(Exam *exam)
-{
-  // Sempre verificando se, por acaso, o parametro passado existe
-  if (exam != NULL)
-  {
 
-    if (exam->timestamp != NULL)
-    {
-      free(exam->timestamp);
-    }
-
-    free(exam);
-  }
-}
 // Função para retornar o id do exam
-int get_exam_id(Exam *exam)
-{
-  if (exam != NULL)
-  {
+int get_exam_id(Exam *exam) {
+  if (exam != NULL) {
     return exam->id;
-  }
-  else
-  {
+  } else {
     printf("Erro! O exame não existe.\n");
     return -1;
   }
 }
 // Função para retornar o id do paciente em relação ao exame
-int get_exam_patient_id(Exam *exam)
-{
-  if (exam != NULL)
-  {
+int get_exam_patient_id(Exam *exam) {
+  if (exam != NULL) {
     return exam->patient_id;
-  }
-  else
-  {
+  } else {
     printf("Erro! O exame não existe.\n");
     return -1;
   }
 }
 // Função para retornar o id da maquina usada no exame
-int get_exam_rx_id(Exam *exam)
-{
-  if (exam != NULL)
-  {
+int get_exam_rx_id(Exam *exam) {
+  if (exam != NULL) {
     return exam->rx_id;
-  }
-  else
-  {
+  } else {
     printf("Erro! O exame não existe.\n");
     return -1;
   }
 }
 // Função para retornar o horário que o exame foi feito
-int get_exam_time(Exam *exam)
-{
-  if (exam != NULL)
-  {
+int get_exam_time(Exam *exam) {
+  if (exam != NULL) {
     return exam->timestamp;
-  }
-  else
-  {
+  } else {
     printf("Erro! O exame não existe.\n");
-    return NULL;
+    return 0;
   }
 }
 
 // ---------------------------- QUEUE AND NODES ----------------------------
 
 // Definição da estrutura dos nós da fila dos exames
-struct qnExam
-{
+struct qnExam {
   Exam *info;
   qnExam *next;
   qnExam *prev;
 };
 
 // Definição da estrutura da fila dos exames
-struct qExam
-{
+struct qExam {
   // int countever;
   int count;
   qnExam *front;
@@ -138,12 +106,10 @@ struct qExam
 };
 
 // Criação de filas vazias para exames
-qExam *create_qExam()
-{
+qExam *create_qExam() {
   qExam *q = (qExam *)malloc(sizeof(qExam));
   // Verifica se alocou corretament
-  if (q == NULL)
-  {
+  if (q == NULL) {
     printf("Erro ao alocar memória para a fila vazia.\n");
     return NULL;
   }
@@ -152,37 +118,30 @@ qExam *create_qExam()
 }
 
 // Função para verificar se a fila de exames está vazia
-int fila_vazia_exam(qExam *q)
-{
-  return q->front == NULL;
-}
+int fila_vazia_exam(qExam *q) { return q->front == NULL; }
 
 // Inserir exame na fila de exames de acordo com a severidade do paciente
-void enqueue_qExam(qExam *q, Exam *exam)
-{
+void enqueue_qExam(qExam *q, Exam *exam) {
   qnExam *node = (qnExam *)malloc(sizeof(qnExam));
 
-  if (node == NULL)
-  {
+  if (node == NULL) {
     printf("Erro ao alocar memória para o nó.\n");
-    return NULL;
+    return;
   }
 
   node->info = exam;
 
-  if (fila_vazia_exam(q))
-  {
+  if (fila_vazia_exam(q)) {
     node->next = node->prev = NULL;
     q->front = q->rear = node;
     q->count++;
   }
 
-  else
-  {
+  else {
     qnExam *temp = q->front;
     // qnExam* temp = node->next;
-    while (node->info->condition_IA->severity <= temp->info->condition_IA->severity)
-    {
+    while (node->info->condition_IA->severity <=
+           temp->info->condition_IA->severity) {
       temp = temp->next;
     }
     node->prev = temp->prev;
@@ -193,32 +152,26 @@ void enqueue_qExam(qExam *q, Exam *exam)
 }
 
 // Função para tirar exame da fila
-Exam *dqueue_qExam(qExam *q)
-{
-  assert(!fila_vazia_exam(q));
+Exam *dqueue_qExam(qExam *q) {
 
   Exam *p = q->front->info;
   qnExam *node = q->front;
 
-  if (q->front != q->rear)
-  {
+  if (q->front != q->rear) {
     q->front = q->front->next;
-  }
-  else
-  {
+  } else {
     q->front = q->rear = NULL;
   }
   q->count--;
   free(node);
   return p;
+
 }
 
 // Função para liberar a memória de uma fila.
-void free_qExam(qExam *q)
-{
+void free_qExam(qExam *q) {
   qnExam *node = q->front;
-  while (node != NULL)
-  {
+  while (node != NULL) {
     qnExam *t = node->next;
     free(node);
     node = t;
@@ -227,19 +180,13 @@ void free_qExam(qExam *q)
 }
 
 // Função para retornar uma condição aleatória
-Condition get_random_condition()
-{
+Condition *get_random_condition() {
   // Definição das condições e suas probabilidades
-  Condition conditions[] = {
-      {"Saúde Normal", 1},
-      {"Bronquite", 2},
-      {"Pneumonia", 3},
-      {"COVID", 4},
-      {"Embolia pulmonar", 4},
-      {"Derrame pleural", 4},
-      {"Fibrose pulmonar", 5},
-      {"Tuberculose", 5},
-      {"Câncer de pulmão", 6}};
+  Condition conditions[] = {{"Saúde Normal", 1},     {"Bronquite", 2},
+                            {"Pneumonia", 3},        {"COVID", 4},
+                            {"Embolia pulmonar", 4}, {"Derrame pleural", 4},
+                            {"Fibrose pulmonar", 5}, {"Tuberculose", 5},
+                            {"Câncer de pulmão", 6}};
 
   double probabilities[] = {0.3, 0.2, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05, 0.01};
   int num_conditions = sizeof(probabilities) / sizeof(probabilities[0]);
@@ -249,25 +196,36 @@ Condition get_random_condition()
 
   // Selecionar a condição com base no número aleatório
   double cumulative_probability = 0.0;
-  for (int i = 0; i < num_conditions; i++)
-  {
+  for (int i = 0; i < num_conditions; i++) {
     cumulative_probability += probabilities[i];
-    if (rand_num <= cumulative_probability)
-    {
-      return conditions[i];
+    if (rand_num <= cumulative_probability) {
+      // Alocar memória para a condição selecionada
+      Condition *selected_condition = (Condition *)malloc(sizeof(Condition));
+      if (selected_condition == NULL) {
+        perror("Erro ao alocar memória para a condição");
+        return NULL;
+      }
+      // Copiar os dados da condição selecionada
+      strcpy(selected_condition->name_condition, conditions[i].name_condition);
+      selected_condition->severity = conditions[i].severity;
+      return selected_condition;
     }
   }
 
   // Caso algo dê errado, retornar a primeira condição como padrão
-  return conditions[0];
+  Condition *default_condition = (Condition *)malloc(sizeof(Condition));
+  if (default_condition == NULL) {
+    perror("Erro ao alocar memória para a condição padrão");
+    return NULL;
+  }
+  strcpy(default_condition->name_condition, conditions[0].name_condition);
+  default_condition->severity = conditions[0].severity;
+  return default_condition;
 }
-
 // Arquiva exame no banco de dados
-void arq_exam(Exam *exam, const char *filename)
-{
-  FILE *file = fopen(filename, "w");
-  if (file == NULL)
-  {
+void arq_exam(Exam *exam, const char *filename) {
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
     perror("Erro ao abrir o arquivo");
     return;
   }
@@ -281,3 +239,4 @@ void arq_exam(Exam *exam, const char *filename)
 
   fclose(file);
 }
+

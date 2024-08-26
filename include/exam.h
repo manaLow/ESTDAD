@@ -8,8 +8,7 @@ typedef struct qExam qExam;
 typedef struct qnExam qnExam;
 typedef struct condition_IA Condition;
 
-Exam *create_exam(int id, int patient_id, int rx_id, Condition (*get_random_condition)(), int timestamp); // Criar exame
-void destroy_exam(Exam *exam); // Destruir exame
+Exam *create_exam(int id, int patient_id, int rx_id, Condition* condition, int timestamp); // Criar exame 
 int get_exam_id(Exam *exam); // Obter id exame
 int get_exam_patient_id(Exam *exam);// Obter id do paciente do exame
 int get_exam_rx_id(Exam *exam); //Obter id da máquina do exame
