@@ -11,12 +11,6 @@ typedef struct qnPatient qnPatient;
 
 Patient* create_patient(int id, const char *name, int timestamp); // Criar paciente
 void destroy_patient(Patient *patient); // Deletar paciente
-int get_patient_id(Patient *patient); // Obter ID do paciente
-const char* get_patient_name(Patient *patient); // Obter nome paciente
-int get_patient_timestamp(Patient *patient); // Obter timestamp do paciente
-
-// ---------------------------- QUEUE AND NODE ----------------------------
-
 qPatient* create_qPatient(); //Criação de fila vazia de pacientes;
 int fila_vazia (qPatient* q);  //Verificar se a fila está vazia;
 void enqueue_qPatient(qPatient* q, Patient* patient); //Inserir paciente na fila;

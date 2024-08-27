@@ -43,17 +43,20 @@ struct qExam {
 };
 
 // Inicializa máquinas
-void inicializa_aparelhos(Machine *aparelhos[]) {
+Machine* inicializa_aparelhos(Machine aparelhos) {
+  Machine* inicializa_aparelhos = (Machine*)malloc(sizeof( Machine));
   for (int i = 0; i < 5; i++) {
     aparelhos[i]->rx_id = i + 1;
     aparelhos[i]->ocupado = 0;
     aparelhos[i]->tempo_restante = 0;
     aparelhos[i]->patient = NULL;
   }
+  return aparelhos;
 }
 
+
 // Aloca paciente da fila pra os aparelhos
-void aloca_paciente(Machine *aparelhos[], qPatient *fila) { 
+void aloca_paciente(Machine *aparelhos, qPatient *fila) { 
   for (int i = 0; i < 5; i++) {
     if ((aparelhos[i]->ocupado == 0) && (!fila_vazia(fila))) {
       Patient *patient = dqueue_qPatient(fila);
@@ -69,18 +72,17 @@ void aloca_paciente(Machine *aparelhos[], qPatient *fila) {
 void processa_exame(Machine *aparelho, qExam *qexam, int unt,int id_e, Patient* p) {
   Condition *condition = get_random_condition();
   Exam *exame = create_exam(id_e, p->id, aparelho->rx_id, condition, unt);
-  arq_exam(exame, "db_exam.txt");
   enqueue_qExam(qexam, exame);
 }
 
 // Atualiza tempo e ocupação
-void atualiza_aparelhos(Machine *aparelhos[], qExam *qexam, int unt, int id_e) {
+void atualiza_aparelhos(Machine *aparelhos, qExam *qexam, int unt, int id_e) {
   for (int i = 0; i < 5; i++) {
     if (aparelhos[i]->ocupado == 1) {
       aparelhos[i]->tempo_restante--;
       if (aparelhos[i]->tempo_restante == 0) {
         aparelhos[i]->ocupado = 0;       
-        if (aparelhos[i]->patient != NULL) { //MODIFICADO
+        if (aparelhos[i]->patient != NULL) { 
           Patient* p = aparelhos[i] -> patient;
           processa_exame(aparelhos[i],qexam,unt,id_e, p);
           free(aparelhos[i]->patient); // Libera a memória do paciente
@@ -112,7 +114,6 @@ void atualiza_atendimento(Doctor *doutor, int unt, int i) {
     if (doutor->tempo_restante == 0) {
       doutor->ocupado = 0;
       Report *report = create_report(i, doutor->exame, unt);
-      arq_report(report, "db_report.txt");
       free(doutor->exame); // Libera a memória do exame
       doutor->exame = NULL;
     }

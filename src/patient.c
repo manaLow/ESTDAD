@@ -49,7 +49,7 @@ Patient *create_patient(int id, const char *name, int timestamp){
         free(new_patient);
         return NULL;
     }
-
+    arq_patient(new_patient, "db_patient.txt");
     return new_patient;
 }
 // Função para liberar memória de um cadastro de paciente
@@ -64,41 +64,6 @@ void destroy_patient(Patient* patient){
         free(patient);
     }
 }
-// Função para retornar a id de um paciente
-int get_patient_id(Patient* patient){
-    // Verificando se o ponteiro passado aponta para um paciente
-    if (patient != NULL){
-        return patient->id;
-    }
-    else{
-        printf("Erro! O paciente não existe.\n");
-        return -1;
-    }
-}
-// Função para retornar o nome de um paciente
-const char *get_patient_name(Patient* patient){
-    if (patient != NULL){
-        return patient->name;
-    }
-    else{
-        printf("Erro! O paciente não existe.\n");
-        return NULL;
-    }
-}
-
-// Função para retornar o timestamp de um paciente
-int get_patient_timestamp(Patient *patient){
-    if (patient != NULL){
-        return patient->timestamp;
-    }
-    else{
-        printf("Erro! O paciente não existe.\n");
-        return -1;
-    }
-}
-
-
-// ---------------------------- QUEUE AND NODE ----------------------------
 
 //  Criação de filas vazias para pacientes
 qPatient* create_qPatient(){
@@ -169,9 +134,6 @@ void free_qPatient(qPatient* q){
     }
     free(q);
 }
-
-
-// --------------------- ARQUIVO --------------------
 
 // Gravar paciente no banco de dados
 void arq_patient(Patient* patient, const char* filename) {

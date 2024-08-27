@@ -81,20 +81,13 @@ Para executar o programa compilado, use o seguinte comando:
 
  ## Funcionalidades
 
-### Exemplo do uso de TADs
+### TADs
 
 #### Patient
-
-![patient](link do printscreen)
-
-<sup> _Print Screen do arquivo cabeçalho "patient.h"_ <sup/>
 
  - **create_patient:** Cria um novo paciente, alocando memória para a estrutura, preenchendo os campos internos com os dados
  passados como parâmetros e retornando um ponteiro para a estrutura criada.
  - **destroy_patient:** Libera a memória alocada para a estrutura do paciente.
- - **get_patient_id:** Retorna a identificação única do paciente.
- - **get_patient_name:** Retorna nome do paciente.
- - **get_patient_timestamp:** Retorna o timestamp do paciente.
  - **create_qPatient:** Criação de fila vazia para pacientes.
  - **fila_vazia:** Verificar se a fila está vazia.
  - **enqueue_qPatient:** Inserir paciente na fila.
@@ -102,4 +95,32 @@ Para executar o programa compilado, use o seguinte comando:
  - **free_qPatient:** Função para liberar memória de uma fila.
  - **arq_patient:** Gravar paciente no banco de dados.
 
- ## Exemplo de Uso do Projeto
+#### Exam
+
+- **create_exam:** Criar exame, alocando memória para a estrutura, preenchendo os campos internos com os dados.
+- **get_random_condition():** Retorna uma condição aleatória, de acordo com as probabilidades.
+- **create_qExam():** Criar fila vazia de exames.
+- **fila_vazia_exam:** Verificar se a fila de exames está vazia.
+- **enqueue_qExam:** Inserir exame na fila de acordo com a prioridade.
+- **dqueue_qExam:** Retirar exame da fila.
+- **free_qExam:** Liberar memória de uma fila de exames.
+- **arq_exam:** Arquiva exame no banco de dados.
+
+#### Report
+
+- **create_report:** Criar relatório respeitando as probabilidades de acerto do IA.
+- **destroy_report:** Deletar o report.
+- **arq_report:** Gravar report no banco de dados.
+- **waiting_time:** Tempo de espera pelo laudo.
+- **mean_waiting_time:** Tempo médio de espera por laudo.
+- **mean_time_by_condition:** Tempo médio de espera por laudo por condição.
+
+#### XRMachine Manager
+
+- **inicializa_aparelhos:** Inicializar os aparelhos de raio x.
+- **aloca_paciente:** Aloca os pacientes para as máquinas.
+- **processa_exame:** Cria exame e arquiva.
+- **atualiza_aparelhos:** Atualiza o funcionamento dos aparelhos.
+- **inicia_atendimento:** Inicia médico.
+- **aloca_atendimento:** Aloca exame para atendimento.
+- **tualiza_atendimento:** Atualiza atendimento.

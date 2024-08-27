@@ -37,27 +37,21 @@ int main() {
   // iniciar filas
   qPatient *q_patients = create_qPatient();
   qExam *q_exams = create_qExam();
-
+  printf("%d", q_exams->count);
   // Criar arquivos
   create_empty_files("db_patient.txt");
   create_empty_files("db_exam.txt");
   create_empty_files("db_report.txt");
 
   // Inicializa máquinas e médico
-  Machine *aparelhos[5];
-  for (int i = 0; i < 5; i++) {
-    aparelhos[i] = (Machine *)malloc(sizeof(Machine));
-    if (aparelhos[i] == NULL) {
-      printf("Error allocating memory for Machine\n");
-    }
-  }
+  Machine *aparelhos =  inicializa_aparelhos(aparelhos)
 
   Doctor *doutor = (Doctor *)malloc(sizeof(Doctor));
   if (doutor == NULL) {
     printf("Error allocating memory for Doctor\n");
   }
 
-  inicializa_aparelhos(aparelhos);
+  
   inicia_atendimento(doutor);
 
   while (unt < 43200) {
@@ -67,8 +61,7 @@ int main() {
 
     if (patient_chance <= 0.2) {
       char *n = random_name();
-      Patient *patient = create_patient(id_p++, n, unt);
-      arq_patient(patient, "db_patient.txt"); 
+      Patient *patient = create_patient(id_p++, n, unt); 
       enqueue_qPatient(q_patients, patient);
       ptotal++;
     }

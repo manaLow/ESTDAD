@@ -69,23 +69,8 @@ Report *create_report(int id, Exam *exam, int timestamp)
     }
     r->condition_IA = a;
   }
+  arq_report(r, "db_report.txt");
   return r;
-}
-
-// Retorna o ID do relatório
-int get_report_id(Report *report)
-{
-  if (report == NULL)
-  {
-    return 0;
-  }
-  return report->id;
-}
-
-// Retorna o momento que o relatório foi gerado
-int get_report_timestamp(Report *report)
-{
-  return report->timestamp;
 }
 
 // Grava o report no banco de dados

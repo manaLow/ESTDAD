@@ -71,7 +71,7 @@ char* random_name() {
 // -----------------------------------------------------------------------
 
 // Contabilizar quantos laudos ou exames
-int contar_laudos_exames(const char* filename) {
+int contar_laudos(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo");
@@ -80,22 +80,30 @@ int contar_laudos_exames(const char* filename) {
 
     int count = 0;
     char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        if (sscanf(line, "ID do Laudo: %*d") == 1) {  // Conta laudos se o nome for db_report
+            count++;
+        }
+    }
+    fclose(file);
+    return count;
+}
 
-    if (strcmp(filename, "db_report.txt") == 0) {
-        while (fgets(line, sizeof(line), file)) {
-            if (sscanf(line, "ID do Laudo: %*d") == 1) {  // Conta laudos se o nome for db_report
-                count++;
-            }
+int contar_exames(const char* filename){
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return -1;
+    }
+
+    int count = 0;
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        if (sscanf(line, "ID do Exame: %*d") == 1) {  // Conta exames se for db_exam
+            count++;
         }
     }
 
-    else if (strcmp(filename, "db_exam.txt") == 0) { //Coloquei else if
-        while (fgets(line, sizeof(line), file)) {
-            if (sscanf(line, "ID do Exame: %*d") == 1) {  // Conta exames se for db_exam
-                count++;
-            }
-        }
-    }
 
     fclose(file);
     return count;
@@ -107,8 +115,8 @@ void relatorio_print(int ptotal, const char *report_file, const char *exam_file,
     printf(" ---- RELATÓRIO ----\n\n");
     printf("Visitaram o hospital: %d.\n", ptotal);
     printf("Na fila aguardando exame: %d.\n", qp->count);
-    int qtd_exam = contar_laudos_exames(exam_file);
-    int qtd_report = contar_laudos_exames(report_file);
+    int qtd_exam = contar_exames(exam_file);
+    int qtd_report = contar_laudos(report_file);
     printf("Realizaram exame: %d\n", qtd_exam); 
     if (qtd_report > 0){
         printf("%d%% receberam laudo.\n", (int)((qtd_report/(double)qtd_exam)*100)); //Modificado
@@ -127,5 +135,7 @@ void relatorio_print(int ptotal, const char *report_file, const char *exam_file,
 
     printf("\n Número de exames feitos depois de %d u.t:", unt);
     printf("\n%d\n\n",qtd_exam);
+    
+
     
 }
